@@ -30,34 +30,53 @@ const colorLookup = ({ r, g, b }) =>
     c => Color(c).rgbNumber() === Color.rgb(r, g, b).rgbNumber()
   );
 
+const parseWeight = weightText =>
+  weightText === "medium" || weightText === "semibold" ? weightText : undefined;
+
 const fontMapper = ({ textStyles }) =>
   textStyles.map(({ textStyle }) => {
-    const { fontFamily, fontSize, lineHeight, color } = textStyle;
+    const {
+      fontFamily,
+      fontSize,
+      fontStyle,
+      lineHeight,
+      color,
+      weightText
+    } = textStyle;
+
     if (fontFamily.match(/garamond/i)) {
       return fontFormatter({
         type: "serif",
+        italic: fontStyle === "italic",
+        weight: parseWeight(weightText),
         color: colorLookup(color),
         size: fontSizeLookup("serif", fontSize, lineHeight)
       });
     } else if (fontFamily.match(/unica/i)) {
       return fontFormatter({
         type: "sans",
+        italic: fontStyle === "italic",
+        weight: parseWeight(weightText),
         color: colorLookup(color),
         size: fontSizeLookup("sans", fontSize, lineHeight)
       });
     } else if (fontFamily.match(/avant/i)) {
       return fontFormatter({
         type: "display",
+        italic: fontStyle === "italic",
+        weight: parseWeight(weightText),
         color: colorLookup(color),
         size: fontSizeLookup("display", fontSize, lineHeight)
       });
     }
   });
 
-const fontFormatter = ({ type, size, color }) =>
+const fontFormatter = ({ type, size, italic, color, weight }) =>
   "<" +
   capitalize(type) +
+  (italic ? " italic" : "") +
   (size ? ` size="${size}"` : "") +
+  (weight ? ` weight="${weight}"` : "") +
   (color ? ` color="${color}"` : "") +
   ">" +
   `</${capitalize(type)}>`;
