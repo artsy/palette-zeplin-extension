@@ -33,10 +33,6 @@ const colorLookup = ({ r, g, b }) =>
 const fontMapper = ({ textStyles }) =>
   textStyles.map(({ textStyle }) => {
     const { fontFamily, fontSize, lineHeight, color } = textStyle;
-    // return JSON.stringify(color);
-    // return Color({ r: 0, b: 0, g: 0 }).hex();
-    // return colorLookup(color);
-    // if (fontFamily) return JSON.stringify(themeProps.typeSizes, null, 2);
     if (fontFamily.match(/garamond/i)) {
       return fontFormatter({
         type: "serif",
