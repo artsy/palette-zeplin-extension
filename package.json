@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "zem start",
-    "build": "zem build",
+    "build": "zem build && cp dist/* docs",
     "clean": "zem clean",
     "exec": "zem exec"
   },
